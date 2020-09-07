@@ -21,7 +21,7 @@ Notes:
 
         Uses millisDelay for non blocking timers
         https://www.forward.com.au/pfod/ArduinoProgramming/TimingDelaysInArduino.html
-
+        add to lib/
         Example based on the Arduino WifiUdpNtpClient example
 
         NTP servers can be called via name or ip address, use only servers that can
