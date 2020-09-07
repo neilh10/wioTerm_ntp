@@ -6,7 +6,6 @@
  Created:	9/7/2020 04:30:00 PM
  Author:	Jim Hamilton
  Company:   Sannox Systems Pty Ltd
-
  Details:   Example of setting a rtc via ntp using the Wio Terminal
 
 ******* Updates *******
@@ -32,12 +31,14 @@ Notes:
 
 // switch between local and remote time servers
 // comment out to use remote server
-#define USELOCALNTP
+//#define USELOCALNTP
 
 #include <AtWiFi.h>
+//https://www.forward.com.au/pfod/ArduinoProgramming/TimingDelaysInArduino.html
 #include <millisDelay.h>
 #include <Wire.h>
-#include <RTClib.h>
+//#include <RTClib.h>
+#include "RTC_SAMD51.h"
 
 
 const char ssid[] = "your-ssid"; // add your required ssid
@@ -68,7 +69,8 @@ WiFiUDP udp;
 // localtime
 unsigned long devicetime;
 
-RTC_DS3231 rtc;
+//RTC_DS3231 rtc;
+RTC_SAMD51 rtc;
 
 // for use by the Adafuit RTClib library
 char daysOfTheWeek[7][12] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
@@ -91,19 +93,27 @@ void setup() {
     // check if rtc present
     if (devicetime == 0) {
         Serial.println("Failed to get time from network time server.");
+    } else {
+        Serial.print("epoch UTC time");
+        Serial.println(devicetime);
     }
 
     if (!rtc.begin()) {
         Serial.println("Couldn't find RTC");
-        while (1) delay(10); // stop operating
+        while (1) {
+            delay(5000); // stop operating
+            Serial.print(" Halted! ");
+        }
     }
 
     // check if rtc has lost power i.e. battery not present or flat or new device
-    if (rtc.lostPower()) {
-
-        Serial.println("RTC lost power, let's set the time!");
+    now = rtc.now();
+    if (! now.isValid() ) {
+        Serial.print("RTC lost power, set the time to ");
         // When time needs to be set on a new device, or after a power loss, 
-        rtc.adjust(DateTime(devicetime));
+        DateTime ntp_dt(devicetime);
+        rtc.adjust(ntp_dt);
+        Serial.println(ntp_dt.timestamp(DateTime::TIMESTAMP_FULL));        
     }
     // get and print the current rtc time
     now = rtc.now();
@@ -202,7 +212,7 @@ unsigned long getNTPtime() {
             const unsigned long seventyYears = 2208988800UL;
             // subtract seventy years:
             unsigned long epoch = secsSince1900 - seventyYears;
-
+#if defined ADJUST_TIME
             // adjust time for timezone offset in secs +/- from UTC
             // WA time offset from UTC is +8 hours (28,800 secs)
             // + East of GMT
@@ -212,6 +222,9 @@ unsigned long getNTPtime() {
             // WA local time 
             unsigned long adjustedTime;
             return adjustedTime = epoch + tzOffset;
+#else
+            return epoch;
+#endif
         }
         else {
             // were not able to parse the udp packet successfully
