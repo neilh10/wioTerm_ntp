@@ -41,8 +41,8 @@ Notes:
 #include "RTC_SAMD51.h"
 
 
-const char ssid[] = "your-ssid"; // add your required ssid
-const char password[] = "your-passowrd"; // add your own netywork password
+const char ssid[] = "ArthurGuestSsid"; // add your required ssid
+const char password[] = "guest1234";//"your-passowrd"; // add your own netywork password
 
 millisDelay updateDelay; // the update delay object. used for ntp periodic update.
 
@@ -264,7 +264,7 @@ unsigned long sendNTPpacket(const char* address) {
     // you can send a packet requesting a timestamp:
     udp.beginPacket(address, 123); //NTP requests are to port 123
     udp.write(packetBuffer, NTP_PACKET_SIZE);
-    udp.endPacket();
+    return udp.endPacket();
 }
 
 void printWifiStatus() {
