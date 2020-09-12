@@ -2,9 +2,9 @@
 /*
  Name:		wioTerm_ntp.ino
  Sensors:
- Version:   1.0.0
+ Version:   2.0.0nh
  Created:	9/7/2020 04:30:00 PM
- Author:	Jim Hamilton
+ Author:	Jim Hamilton modified Neil Hancock Sept/7/2020
  Company:   Sannox Systems Pty Ltd
  Details:   Example of setting a rtc via ntp using the Wio Terminal
 
@@ -74,6 +74,11 @@ RTC_SAMD51 rtc;
 
 // for use by the Adafuit RTClib library
 char daysOfTheWeek[7][12] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+void connectToWiFi(const char* ssid, const char* pwd);
+unsigned long getNTPtime();
+unsigned long sendNTPpacket(const char* address);
+void printWifiStatus();
 
 void setup() {
 

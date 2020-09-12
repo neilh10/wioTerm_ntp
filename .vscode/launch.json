@@ -12,7 +12,7 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "D:/usr/a/PlatformIO/Projects/wioTerm_ntp/.pio/build/seeed_wio_terminal/firmware.elf",
+            "executable": "d:/usr/a/PlatformIO/Projects/wioTerm_ntp/.pio/build/seeed_wio_terminal/firmware.elf",
             "toolchainBinDir": "C:/Users/neilh77a/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "svdPath": "C:/Users/neilh77a/.platformio/platforms/atmelsam/misc/svd/ATSAMD51P19A.svd",
             "preLaunchTask": {
@@ -25,7 +25,7 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "D:/usr/a/PlatformIO/Projects/wioTerm_ntp/.pio/build/seeed_wio_terminal/firmware.elf",
+            "executable": "d:/usr/a/PlatformIO/Projects/wioTerm_ntp/.pio/build/seeed_wio_terminal/firmware.elf",
             "toolchainBinDir": "C:/Users/neilh77a/.platformio/packages/toolchain-gccarmnoneeabi/bin",
             "svdPath": "C:/Users/neilh77a/.platformio/platforms/atmelsam/misc/svd/ATSAMD51P19A.svd",
             "internalConsoleOptions": "openOnSessionStart"
